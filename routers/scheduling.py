@@ -1,78 +1,21 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
-from datetime import datetime, timedelta
-from typing import List, Optional
+from datetime import timedelta
+
+from scheduling.scheduling import (
+    is_time_available,
+    find_available_slots,
+    agent_can_accept_more_work,
+)
+from models import (
+    CheckAvailabilityRequest,
+    CheckAvailabilityResponse,
+    FindAvailableTimesRequest,
+    FindAvailableTimesResponse,
+    RecommendWorkRequest,
+    RecommendWorkResponse,
+)
 
 router = APIRouter(prefix="/scheduling", tags=["scheduling"])
-
-
-# Models
-class CheckAvailabilityRequest(BaseModel):
-    user_id: int
-    time: datetime
-
-
-class CheckAvailabilityResponse(BaseModel):
-    available: bool
-
-
-class TimeRange(BaseModel):
-    start: datetime
-    end: datetime
-
-
-class FindAvailableTimesRequest(BaseModel):
-    user_id: int
-    time_ranges: List[TimeRange]
-    duration_minutes: int = Field(gt=0)
-    count: int = Field(gt=0)
-
-
-class FindAvailableTimesResponse(BaseModel):
-    available_times: List[datetime]
-
-
-class RecommendWorkRequest(BaseModel):
-    agent_id: int
-
-
-class RecommendWorkResponse(BaseModel):
-    can_accept_more_work: bool
-    message: Optional[str] = None
-
-
-agent_calendars = {}
-user_calendars = {}
-
-
-def is_time_available(user_id: int, time: datetime) -> bool:
-    bookings = user_calendars.get(user_id, [])
-    # books are assumed to be tuples (start, end)
-    for start, end in bookings:
-        if start <= time < end:
-            return False
-    return True
-
-
-def find_available_slots(user_id: int, time_ranges: List[TimeRange], duration: timedelta, count: int) -> List[datetime]:
-    available = []
-    for interval in time_ranges:
-        current_start = interval.start
-        while current_start + duration <= interval.end and len(available) < count:
-            if is_time_available(user_id, current_start):
-                available.append(current_start)
-            current_start += timedelta(minutes=15)  # increment by a step; adjustable
-        if len(available) >= count:
-            break
-    return available
-
-
-def agent_can_accept_more_work(agent_id: int) -> bool:
-    # check if the agent's calendar has > 3 bookings today
-    bookings = agent_calendars.get(agent_id, [])
-    today = datetime.now().date()
-    todays_bookings = [b for b in bookings if b[0].date() == today]
-    return len(todays_bookings) < 3
 
 
 # Endpoints
