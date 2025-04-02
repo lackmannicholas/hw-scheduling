@@ -3,7 +3,8 @@
     {
       "client_id": 1,
       "agent_id": 1,
-      "calendar_type": "json"
+      "calendar_type": "json",
+      "availability_increment": 15
     },
     {
       "client_id": 1,

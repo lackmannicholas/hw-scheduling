@@ -45,6 +45,7 @@ class AgentCalendarSettings(BaseModel):
     client_id: int
     agent_id: int
     calendar_type: str
+    availability_increment: int = Field(default=15)
     max_bookings_per_day: int = Field(default=3)
 
 

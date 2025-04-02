@@ -2,15 +2,16 @@ import json
 from datetime import datetime, timedelta
 from typing import List
 
-from models import AgentCalendarEvent, TimeRange
+from models import AgentCalendarEvent, AgentCalendarSettings, TimeRange
 from agent_calendar.agent_calendar import AgentCalendar
 
 
 class JSONAgentCalendar(AgentCalendar):
-    def __init__(self, json_file: str, client_id: int, agent_id: int):
+    def __init__(self, json_file: str, client_id: int, agent_id: int, calendar_settings: AgentCalendarSettings):
         self.json_file: str = json_file
         self.client_id: int = client_id
         self.agent_id: int = agent_id
+        self.calendar_settings: AgentCalendarSettings = calendar_settings
         self.events: AgentCalendarEvent = self._load_calendar_events()
 
     def _load_calendar_events(self):
@@ -51,14 +52,14 @@ class JSONAgentCalendar(AgentCalendar):
         # TODO: Future enhancement - Check if the time slot is within the agent's working hours
         return True
 
-    def find_available_slots(self, user_id: int, time_ranges: List[TimeRange], duration: timedelta, count: int) -> List[datetime]:
+    def find_available_slots(self, time_ranges: List[TimeRange], duration: timedelta, count: int) -> List[datetime]:
         available = []
         for interval in time_ranges:
             current_start = interval.start
             while current_start + duration <= interval.end and len(available) < count:
-                if self.is_time_available(user_id, current_start):
+                if self.is_time_available(current_start, current_start + duration):
                     available.append(current_start)
-                current_start += timedelta(minutes=15)  # increment by a step; adjustable
+                current_start += timedelta(minutes=self.calendar_settings.availability_increment)
             if len(available) >= count:
                 break
         return available

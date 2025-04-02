@@ -32,15 +32,20 @@ async def check_availability(request: CheckAvailabilityRequest):
 
 @router.post("/available", response_model=FindAvailableTimesResponse)
 async def find_available_times(request: FindAvailableTimesRequest):
-    agent_calendar = AgentCalendarFactory.create_calendar(client_id=request.client_id, agent_id=request.agent_id)
-    if not agent_calendar:
-        raise HTTPException(status_code=404, detail="Agent calendar not found")
+    try:
+        agent_calendar = AgentCalendarFactory.create_calendar(client_id=request.client_id, agent_id=request.agent_id)
+        if not agent_calendar:
+            raise HTTPException(status_code=404, detail="Agent calendar not found")
 
-    duration = timedelta(minutes=request.duration_minutes)
-    available_times = agent_calendar.find_available_slots(request.user_id, request.time_ranges, duration, request.count)
-    if not available_times:
-        raise HTTPException(status_code=404, detail="No available time slots found")
-    return FindAvailableTimesResponse(available_times=available_times)
+        duration = timedelta(minutes=request.duration_minutes)
+        available_times = agent_calendar.find_available_slots(request.time_ranges, duration, request.count)
+        if not available_times:
+            raise HTTPException(status_code=404, detail="No available time slots found")
+        return FindAvailableTimesResponse(available_times=available_times)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail="Agent calendar not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.post("/recommend", response_model=RecommendWorkResponse)

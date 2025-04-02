@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
+from typing import List
+
+from models import TimeRange
 
 
 class AgentCalendar(ABC):
@@ -18,12 +21,14 @@ class AgentCalendar(ABC):
         pass
 
     @abstractmethod
-    def find_available_slots(self, duration: timedelta) -> list:
+    def find_available_slots(self, time_ranges: List[TimeRange], duration: timedelta, count: int) -> list:
         """
         Finds available time slots that can accommodate a task of a given duration.
 
         Args:
+            time_ranges (List[TimeRange]): A list of time ranges to check for availability.
             duration (timedelta): The duration needed for the appointment.
+            count (int): The number of available slots to find.
 
         Returns:
             list: A list of available time slot tuples (start_time, end_time).
