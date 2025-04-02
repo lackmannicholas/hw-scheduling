@@ -27,10 +27,10 @@ async def check_availability(request: CheckAvailabilityRequest):
         available = agent_calendar.is_time_available(start_time=request.start_date_time, end_time=request.end_date_time)
         return CheckAvailabilityResponse(available=available)
     except ValueError as e:
-        logger.error(f"Error checking availability: {e}")
+        logger.error(f"Error checking availability: {e}", exc_info=True)
         raise HTTPException(status_code=404, detail="Agent calendar not found")
     except Exception as e:
-        logger.error(f"Error checking availability: {e}")
+        logger.error(f"Error checking availability: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
@@ -47,10 +47,10 @@ async def find_available_times(request: FindAvailableTimesRequest):
             raise HTTPException(status_code=404, detail="No available time slots found")
         return FindAvailableTimesResponse(available_times=available_times)
     except ValueError as e:
-        logger.error(f"Error finding available times: {e}")
+        logger.error(f"Error finding available times: {e}", exc_info=True)
         raise HTTPException(status_code=404, detail="Agent calendar not found")
     except Exception as e:
-        logger.error(f"Error finding available times: {e}")
+        logger.error(f"Error finding available times: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
@@ -61,12 +61,12 @@ async def recommend_work(request: RecommendWorkRequest):
         if not agent_calendar:
             raise HTTPException(status_code=404, detail="Agent calendar not found")
 
-        can_accept = agent_calendar.agent_can_accept_more_work(request.agent_id)
+        can_accept = agent_calendar.agent_can_accept_more_work()
         message = "Agent has open time to take additional work." if can_accept else "Agent is fully booked today."
         return RecommendWorkResponse(can_accept_more_work=can_accept, message=message)
     except ValueError as e:
-        logger.error(f"Error recommending work: {e}")
+        logger.error(f"Error recommending work: {e}", exc_info=True)
         raise HTTPException(status_code=404, detail="Agent calendar not found")
     except Exception as e:
-        logger.error(f"Error recommending work: {e}")
+        logger.error(f"Error recommending work: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal server error")
