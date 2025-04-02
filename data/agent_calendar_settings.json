@@ -1,15 +1,22 @@
-{
-  "agent_calendar_settings": [
-    {
-      "client_id": 1,
-      "agent_id": 1,
-      "calendar_type": "json",
-      "availability_increment": 15
-    },
-    {
-      "client_id": 1,
-      "agent_id": 2,
-      "calendar_type": "json"
+[
+  {
+    "client_id": 1,
+    "agent_id": 1,
+    "calendar_type": "json",
+    "availability_increment": 15,
+    "working_hours": {
+      "start": "09:00",
+      "end": "20:00"
     }
-  ]
-}
+  },
+  {
+    "client_id": 1,
+    "agent_id": 2,
+    "calendar_type": "json",
+    "availability_increment": 30,
+    "working_hours": {
+      "start": "09:00",
+      "end": "17:00"
+    }
+  }
+]

@@ -1,9 +1,13 @@
 import json
+import logging
+
 from datetime import datetime, timedelta
 from typing import List
 
 from models import AgentCalendarEvent, AgentCalendarSettings, TimeRange
 from agent_calendar.agent_calendar import AgentCalendar
+
+logger = logging.getLogger(__name__)
 
 
 class JSONAgentCalendar(AgentCalendar):
@@ -40,16 +44,25 @@ class JSONAgentCalendar(AgentCalendar):
 
                 return events
         except Exception as e:
-            print(f"Error loading calendar events: {e}")
+            logger.error(f"Error loading calendar events: {e}", exc_info=True)
             return []
 
     def is_time_available(self, start_time: datetime, end_time: datetime) -> bool:
         """Check if the time slot is available for the agent."""
+        # convert start_time and end_time to time of day check if the start and end times are within the agent's working hours
+        if start_time.time() < self.calendar_settings.working_hours.start or end_time.time() > self.calendar_settings.working_hours.end:
+            return False
+
+        # check if the start time is before the end time
+        if start_time >= end_time:
+            return False
+
         # Check if the time slot overlaps with any existing events
         for event in self.events:
+            # check if the event overlaps with the requested time slot
             if start_time < event.dtend and end_time > event.dtstart:
                 return False
-        # TODO: Future enhancement - Check if the time slot is within the agent's working hours
+
         return True
 
     def find_available_slots(self, time_ranges: List[TimeRange], duration: timedelta, count: int) -> List[datetime]:

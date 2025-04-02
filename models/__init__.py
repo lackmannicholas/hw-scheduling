@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from datetime import datetime
+from datetime import datetime, time
 from typing import List, Optional
 
 
@@ -41,10 +41,16 @@ class RecommendWorkResponse(BaseModel):
     message: Optional[str] = None
 
 
+class WorkingHours(BaseModel):
+    start: time
+    end: time
+
+
 class AgentCalendarSettings(BaseModel):
     client_id: int
     agent_id: int
     calendar_type: str
+    working_hours: WorkingHours
     availability_increment: int = Field(default=15)
     max_bookings_per_day: int = Field(default=3)
 

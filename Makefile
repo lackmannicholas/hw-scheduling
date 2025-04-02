@@ -19,4 +19,4 @@ run:
 	python3 main.py
 
 test:
-	pytest -v --disable-warnings --maxfail=1
+	pytest -v --disable-warnings

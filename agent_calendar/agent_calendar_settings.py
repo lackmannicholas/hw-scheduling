@@ -15,8 +15,6 @@ def load_agent_calendar_settings():
 
 
 def get_agent_calendar_settings(client_id: int, agent_id: int) -> AgentCalendarSettings:
-    # use list comprehension to filter settings and find the one that matches client_id and agent_id
-
     settings = [setting for setting in all_agent_calendar_settings if setting['client_id'] == client_id and setting['agent_id'] == agent_id]
     if len(settings) == 0:
         raise ValueError(f"No settings found for client_id {client_id} and agent_id {agent_id}")
@@ -28,4 +26,4 @@ def get_agent_calendar_settings(client_id: int, agent_id: int) -> AgentCalendarS
 
 
 # loading on import for ease of use as an example datasource
-all_agent_calendar_settings = load_agent_calendar_settings().get('agent_calendar_settings', [])
+all_agent_calendar_settings = load_agent_calendar_settings()
