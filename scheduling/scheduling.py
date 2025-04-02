@@ -2,10 +2,11 @@ from datetime import datetime, timedelta
 from typing import List
 
 from models import TimeRange
+from agent_calendar.agent_calendar import agent_calendars
 
 
 def is_time_available(user_id: int, time: datetime) -> bool:
-    bookings = user_calendars.get(user_id, [])
+    bookings = agent_calendars.get(user_id, [])
     # books are assumed to be tuples (start, end)
     for start, end in bookings:
         if start <= time < end:

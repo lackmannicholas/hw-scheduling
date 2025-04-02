@@ -4,8 +4,10 @@ from typing import List, Optional
 
 
 class CheckAvailabilityRequest(BaseModel):
-    user_id: int
-    time: datetime
+    client_id: int
+    agent_id: int
+    start_date_time: datetime
+    end_date_time: datetime
 
 
 class CheckAvailabilityResponse(BaseModel):
@@ -18,7 +20,8 @@ class TimeRange(BaseModel):
 
 
 class FindAvailableTimesRequest(BaseModel):
-    user_id: int
+    client_id: int
+    agent_id: int
     time_ranges: List[TimeRange]
     duration_minutes: int = Field(gt=0)
     count: int = Field(gt=0)
@@ -29,6 +32,7 @@ class FindAvailableTimesResponse(BaseModel):
 
 
 class RecommendWorkRequest(BaseModel):
+    client_id: int
     agent_id: int
 
 
@@ -37,8 +41,27 @@ class RecommendWorkResponse(BaseModel):
     message: Optional[str] = None
 
 
+class AgentCalendarSettings(BaseModel):
+    client_id: int
+    agent_id: int
+    calendar_type: str
+    max_bookings_per_day: int = Field(default=3)
+
+
+class AgentCalendarEvent(BaseModel):
+    uid: str
+    dtstamp: datetime
+    dtstart: datetime
+    dtend: datetime
+    summary: str
+    description: Optional[str] = None
+    location: Optional[str] = None
+
+
 class ICSEvent(BaseModel):
     uid: str
+    client_id: int
+    agent_id: int
     dtstamp: datetime
     dtstart: datetime
     dtend: datetime

@@ -1,0 +1,68 @@
+[
+  {
+    "client_id": 1,
+    "agent_id": 1,
+    "calendar_events": [
+      {
+        "uid": "123456789@example.com",
+        "dtstamp": "2025-03-30T12:00:00Z",
+        "dtstart": "2025-04-01T09:00:00Z",
+        "dtend": "2025-04-01T10:00:00Z",
+        "summary": "Team Meeting",
+        "description": "Planning for marketing strategy for 3 new clients.",
+        "location": "Conference Room A"
+      },
+      {
+        "uid": "987654321@example.com",
+        "dtstamp": "2025-03-30T12:00:00Z",
+        "dtstart": "2025-04-05T10:00:00Z",
+        "dtend": "2025-04-05T15:00:00Z",
+        "summary": "Open House",
+        "description": "Open House for 1234 Main St. Last open house before reviewing offers.",
+        "location": "1234 Main St."
+      },
+      {
+        "uid": "567890123@example.com",
+        "dtstamp": "2025-03-30T12:00:00Z",
+        "dtstart": "2025-04-05T16:00:00Z",
+        "dtend": "2025-04-05T17:00:00Z",
+        "summary": "Offer Review with Clients",
+        "description": "Review offers with clients after open house.",
+        "location": "1234 Main St."
+      }
+    ]
+  },
+  {
+    "client_id": 1,
+    "agent_id": 2,
+    "calendar_events": [
+      {
+        "uid": "555555555@example.com",
+        "dtstamp": "2025-04-02T11:00:00Z",
+        "dtstart": "2025-04-07T09:30:00Z",
+        "dtend": "2025-04-07T10:30:00Z",
+        "summary": "Client Presentation",
+        "description": "Presentation for client proposal",
+        "location": "Client Office"
+      },
+      {
+        "uid": "222222222@example.com",
+        "dtstamp": "2025-04-01T10:00:00Z",
+        "dtstart": "2025-04-03T08:00:00Z",
+        "dtend": "2025-04-03T09:00:00Z",
+        "summary": "Sales Meeting",
+        "description": "Quarterly sales meeting",
+        "location": "Conference Room B"
+      },
+      {
+        "uid": "333333333@example.com",
+        "dtstamp": "2025-04-01T10:00:00Z",
+        "dtstart": "2025-04-04T11:00:00Z",
+        "dtend": "2025-04-04T12:30:00Z",
+        "summary": "Product Demo",
+        "description": "Demo for new product features",
+        "location": "Online"
+      }
+    ]
+  }
+]

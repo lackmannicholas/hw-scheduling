@@ -1,0 +1,14 @@
+{
+  "agent_calendar_settings": [
+    {
+      "client_id": 1,
+      "agent_id": 1,
+      "calendar_type": "json"
+    },
+    {
+      "client_id": 1,
+      "agent_id": 2,
+      "calendar_type": "json"
+    }
+  ]
+}
