@@ -1,6 +1,7 @@
 import json
 import logging
 
+import datetime as dt
 from datetime import datetime, timedelta
 from typing import List
 
@@ -69,10 +70,17 @@ class JSONAgentCalendar(AgentCalendar):
         available = []
         for interval in time_ranges:
             current_start = interval.start
+
             while current_start + duration <= interval.end and len(available) < count:
                 if self.is_time_available(current_start, current_start + duration):
                     available.append(current_start)
+
                 current_start += timedelta(minutes=self.calendar_settings.availability_increment)
+
+                # if current_start plus duration falls after the calender_settings.working_hours.end, go to beginning of the next date
+                if (current_start + duration).time() > self.calendar_settings.working_hours.end:
+                    current_start = datetime.combine(current_start.date() + timedelta(days=1), self.calendar_settings.working_hours.start).replace(tzinfo=dt.timezone.utc)
+
             if len(available) >= count:
                 break
         return available
