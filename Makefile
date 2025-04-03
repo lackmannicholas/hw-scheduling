@@ -13,7 +13,7 @@ clean:
 install:
 	@echo "Installing dependencies..."
 	@echo "Make sure to activate the virtual environment first using 'make venv'"
-	pip install -r requirements.txt
+	pip3 install -r requirements.txt
 
 run:
 	python3 main.py
