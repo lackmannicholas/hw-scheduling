@@ -1,4 +1,9 @@
-from agent_calendar_settings import get_agent_calendar_settings
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent.parent))
+
+from agent_calendar.agent_calendar_settings import get_agent_calendar_settings
 
 
 def test_get_agent_calendar_settings():
@@ -8,8 +13,3 @@ def test_get_agent_calendar_settings():
     assert settings.client_id == client_id
     assert settings.agent_id == agent_id
     assert settings.calendar_type == "json"
-
-
-if __name__ == "__main__":
-    test_get_agent_calendar_settings()
-    print("All tests passed!")
