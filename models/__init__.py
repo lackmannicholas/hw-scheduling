@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from datetime import datetime, time
+from datetime import datetime, time, date
 from typing import List, Optional
 
 
@@ -31,14 +31,13 @@ class FindAvailableTimesResponse(BaseModel):
     available_times: List[datetime]
 
 
-class RecommendWorkRequest(BaseModel):
+class SuggestWorkRequest(BaseModel):
     client_id: int
     agent_id: int
 
 
-class RecommendWorkResponse(BaseModel):
-    can_accept_more_work: bool
-    message: Optional[str] = None
+class SuggestWorkResponse(BaseModel):
+    suggestions: List[str]
 
 
 class WorkingHours(BaseModel):
@@ -75,3 +74,13 @@ class ICSEvent(BaseModel):
     summary: str
     description: Optional[str] = None
     location: Optional[str] = None
+
+
+class ToDo(BaseModel):
+    id: int
+    task: str
+    due_date: date
+    priority: str
+    status: str
+    client_id: int
+    agent_id: int

@@ -9,8 +9,8 @@ from models import (
     CheckAvailabilityResponse,
     FindAvailableTimesRequest,
     FindAvailableTimesResponse,
-    RecommendWorkRequest,
-    RecommendWorkResponse,
+    SuggestWorkRequest,
+    SuggestWorkResponse,
 )
 
 logger = logging.getLogger(__name__)
@@ -54,16 +54,15 @@ async def find_available_times(request: FindAvailableTimesRequest):
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
-@router.post("/recommend", response_model=RecommendWorkResponse)
-async def recommend_work(request: RecommendWorkRequest):
+@router.post("/recommend", response_model=SuggestWorkResponse)
+async def recommend_work(request: SuggestWorkRequest):
     try:
         agent_calendar = AgentCalendarFactory.create_calendar(client_id=request.client_id, agent_id=request.agent_id)
         if not agent_calendar:
             raise HTTPException(status_code=404, detail="Agent calendar not found")
 
-        can_accept = agent_calendar.agent_can_accept_more_work()
-        message = "Agent has open time to take additional work." if can_accept else "Agent is fully booked today."
-        return RecommendWorkResponse(can_accept_more_work=can_accept, message=message)
+        suggestions = agent_calendar.recommend_work_from_todo()
+        return SuggestWorkResponse(suggestions=suggestions)
     except ValueError as e:
         logger.error(f"Error recommending work: {e}", exc_info=True)
         raise HTTPException(status_code=404, detail="Agent calendar not found")

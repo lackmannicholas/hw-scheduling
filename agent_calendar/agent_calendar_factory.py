@@ -32,6 +32,8 @@ class AgentCalendarFactory:
 
         if calendar_type == "json":
             # Create a JSON-based calendar
-            return JSONAgentCalendar(json_file="data/ics_data.json", client_id=client_id, agent_id=agent_id, calendar_settings=agent_calendar_settings)
+            return JSONAgentCalendar(
+                calendar_json_file="data/ics_data.json", todo_json_file="data/todo.json", client_id=client_id, agent_id=agent_id, calendar_settings=agent_calendar_settings
+            )
         else:
             raise ValueError(f"Unknown calendar type: {calendar_type}")

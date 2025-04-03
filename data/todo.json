@@ -2,7 +2,7 @@
   {
     "id": 1,
     "task": "Schedule property showing for 123 Maple Street",
-    "due_date": "2023-10-15",
+    "due_date": "2025-04-04",
     "priority": "High",
     "status": "Pending",
     "client_id": 1,
@@ -11,7 +11,7 @@
   {
     "id": 2,
     "task": "Follow up with client about offer on 456 Oak Avenue",
-    "due_date": "2023-10-16",
+    "due_date": "2025-04-03",
     "priority": "Medium",
     "status": "In Progress",
     "client_id": 1,
@@ -20,7 +20,7 @@
   {
     "id": 3,
     "task": "Prepare listing documents for 789 Pine Road",
-    "due_date": "2023-10-18",
+    "due_date": "2025-04-05",
     "priority": "High",
     "status": "Pending",
     "client_id": 1,
@@ -29,7 +29,7 @@
   {
     "id": 4,
     "task": "Attend real estate networking event",
-    "due_date": "2023-10-20",
+    "due_date": "2025-04-06",
     "priority": "Low",
     "status": "Pending",
     "client_id": 1,
@@ -38,7 +38,7 @@
   {
     "id": 6,
     "task": "Call contractor for repairs at 321 Birch Lane",
-    "due_date": "2023-10-19",
+    "due_date": "2025-04-03",
     "priority": "High",
     "status": "Pending",
     "client_id": 1,
@@ -47,7 +47,7 @@
   {
     "id": 7,
     "task": "Send thank-you notes to recent clients",
-    "due_date": "2023-10-21",
+    "due_date": "2025-04-04",
     "priority": "Low",
     "status": "Pending",
     "client_id": 1,

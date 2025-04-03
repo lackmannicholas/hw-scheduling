@@ -36,7 +36,7 @@ class AgentCalendar(ABC):
         pass
 
     @abstractmethod
-    def agent_can_accept_more_work(self) -> bool:
+    def recommend_work_from_todo(self) -> bool:
         """
         Determines if the agent can accept more work based on their current schedule.
 
